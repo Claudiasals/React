@@ -18,10 +18,17 @@ const Counter = () => {
             return _count + 1; // la callback ci deve restituire questo valore 
         });
     }
+    const handleClickButton2 = () => {
+        setCount((_count) => {// CALLBACK PER accedere al valore precedente per sommare 1
+            //aggiungiamo _ per far capire che sono diversi i cunt ma si chiamano uguae perché sono collegati
+            return _count - 1; // la callback ci deve restituire questo valore 
+        });
+    }
 
         return (
             <div>
-                <button onClick={handleClickButton}>ADD 1</button>
+                <button onClick={handleClickButton}>ADD +1</button>
+                <button onClick={handleClickButton2}>ADD -1</button>
 
                 <p> Count: {count} </p>
             </div>
