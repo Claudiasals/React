@@ -1,4 +1,5 @@
 import { useState } from "react"
+import { useEffect } from "react";
 
 const Counter = () => {
     const [count, setCount] = useState(0);
@@ -25,20 +26,27 @@ const Counter = () => {
         });
     }
 
-    const resetButton = () => 
+    const resetButton = () =>
         setCount(0); // riportiamo count a 0
-    
 
 
-        return (
-            <div>
-                <button onClick={handleClickButton}>ADD +1</button>
-                <button onClick={handleClickButton2}>ADD -1</button>
-                <button onClick={resetButton}>RESET</button>
+    useEffect(() => {
+        document.title = `Counter: ${count}`;
+        // document.title significa: vai a prendere il title del document(il file html) 
+        // il backtiks serve per Scrivere "Counter:" e unirlo ad una variabile, 
+        // in questo caso counter che contiene il valore del counter appunto.
+    }, [count]);
 
-                <p> Count: {count} </p>
-            </div>
-        )
-    };
-   
-    export default Counter
+
+    return (
+        <div>
+            <button onClick={handleClickButton}>ADD +1</button>
+            <button onClick={handleClickButton2}>ADD -1</button>
+            <button onClick={resetButton}>RESET</button>
+
+            <p> Count: {count} </p>
+        </div>
+    )
+};
+
+export default Counter
