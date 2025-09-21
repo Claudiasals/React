@@ -17,7 +17,7 @@ const LoginForm = () => {
 
         console.log(event.target.value);
     }
-    
+
     const loginPassword = (event) => {
         setPassword(event.target.value); // aggiorna lo stato password
         console.log(event.target.value);
@@ -27,9 +27,12 @@ const LoginForm = () => {
 
     return (
         <form>
-            <input type="text" onInput = {loginUsername} /> 
-            <input type="text" onInput = {loginPassword} />
+            <input type="text" value={username} onInput = {loginUsername} /> 
+            <input type="text" value={password} onInput = {loginPassword} />
         </form>
+        /* inserisco value={username} così il valore degli input sarà sempre sincronizzato 
+        con lo stato del componente. */
     )
 }
 export default LoginForm
+
