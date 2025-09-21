@@ -23,16 +23,35 @@ const LoginForm = () => {
         console.log(event.target.value);
     }
 
+    const submitButton = (event) => {
+        event.preventDefault(); // blocca il reload
+        return alert(`Username: ${username}, Password: ${password}`)
+    }
 
 
     return (
         <form>
-            <input type="text" value={username} onInput = {loginUsername} /> 
-            <input type="text" value={password} onInput = {loginPassword} />
+            <input type="text" value={username} onInput={loginUsername} />
+            <input type="text" value={password} onInput={loginPassword} />
+            <button onClick={submitButton}>SUBMIT</button>
+
         </form>
         /* inserisco value={username} così il valore degli input sarà sempre sincronizzato 
         con lo stato del componente. */
+
     )
 }
 export default LoginForm
 
+/*
+Quando clicchi sul bottone all’interno di un <form>, il form tenta di inviare e ricaricare la pagina.
+Per evitarlo, devi passare l’evento e chiamare event.preventDefault():
+
+const submitButton = (event) => {
+    event.preventDefault(); // blocca il reload
+    alert(`Username: ${username}, Password: ${password}`);
+}
+
+
+Senza preventDefault, il form si ricarica subito dopo il click e potresti non vedere l’alert o perdere i dati.
+*/
