@@ -39,13 +39,13 @@ const Counter = () => {
 
 
     return (
-        <div>
+        <>
             <button onClick={handleClickButton}>ADD +1</button>
             <button onClick={handleClickButton2}>ADD -1</button>
             <button onClick={resetButton}>RESET</button>
-
             <p> Count: {count} </p>
-        </div>
+
+        </>
     )
 };
 
