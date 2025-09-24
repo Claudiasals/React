@@ -1,57 +1,55 @@
 import { useState } from "react";
 
 const LoginForm = () => {
-    const [username, setUsername] = useState(""); // stato per username
-    const [password, setPassword] = useState(""); // stato per password
+  const [form, setForm] = useState({
+    email: "", // stato per email 
+    password: "" // stato per password
+  });
 
-    const loginUsername = (event) => {
-        setUsername(event.target.value); // aggiorna lo stato username
-        // setUsername: serve per collegare il valore dell’input allo stato del componente (input “controllato”).
+  const handleInput = (event) => {
+    const { name, value } = event.target; // destrutturo il nome dell'input e il valore
+    setForm((prev) => ({
+      ...prev,
+      [name]: value, // aggiorna solo il campo modificato
+    }));
+  };
 
-        /*
-        username → è la variabile di stato che contiene il valore attuale. 
-        setUsername → è la funzione che React ti fornisce per aggiornare lo stato. 
-        La parte set è standard e significa “imposta”/“aggiorna”, 
-        e la parte Username corrisponde al nome dello stato a cui si riferisce. 
-        */
+  const handleSubmit = (event) => {
+    event.preventDefault(); // blocca il reload, per evitare che al submit la pagina venga aggiornata e quindi si perdano i dati
+    alert(`Email: ${form.email}, Password: ${form.password}`);
+  };
 
-        console.log(event.target.value);
-    }
+  return (
+    <form onSubmit={handleSubmit}> {/* collega il submit del form alla funzione handleSubmit */}
+      <input
+        type="email"
+        name="email"
+        value={form.email} // inserisco value={form.email} così il valore dell'input sarà sempre sincronizzato con lo stato del componente
+        onChange={handleInput} // ogni volta che scrivo nell'input aggiorna lo stato
+        placeholder="Email"
+      />
+      <input
+        type="password"
+        name="password"
+        value={form.password} // sincronizza anche la password con lo stato
+        onChange={handleInput}
+        placeholder="Password"
+      />
+      <button type="submit">Submit</button> {/* il bottone di tipo submit richiama handleSubmit */}
+    </form>
+  );
+};
 
-    const loginPassword = (event) => {
-        setPassword(event.target.value); // aggiorna lo stato password
-        console.log(event.target.value);
-    }
-
-    const submitButton = (event) => {
-        event.preventDefault(); // blocca il reload
-        return alert(`Username: ${username}, Password: ${password}`)
-    }
-
-
-    return (
-        <form>
-            <input type="text" value={username} onInput={loginUsername} />
-            <input type="text" value={password} onInput={loginPassword} />
-            <button onClick={submitButton}>SUBMIT</button>
-
-        </form>
-        /* inserisco value={username} così il valore degli input sarà sempre sincronizzato 
-        con lo stato del componente. */
-
-    )
-}
-export default LoginForm
+export default LoginForm;
 
 /*
 Quando clicchi sul bottone all’interno di un <form>, il form tenta di inviare e ricaricare la pagina.
 Per evitarlo, devi passare l’evento e chiamare event.preventDefault():
 
-const submitButton = (event) => {
+const handleSubmit = (event) => {
     event.preventDefault(); // blocca il reload
-    alert(`Username: ${username}, Password: ${password}`);
+    alert(`Email: ${form.email}, Password: ${form.password}`);
 }
-
 
 Senza preventDefault, il form si ricarica subito dopo il click e potresti non vedere l’alert o perdere i dati.
 */
