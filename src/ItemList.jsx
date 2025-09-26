@@ -1,3 +1,5 @@
+// Es. 16: Aggiungi un bottone che, quando cliccato, mostra un alert con il valore corrente dell'input di testo.
+
 import React from "react";
 
 // Il componente ItemList riceve una "prop" chiamata items
