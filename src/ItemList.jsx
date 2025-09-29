@@ -55,7 +55,8 @@ export const List3= ({ items }) => {
         <>
         <h2> Lista importata da array in App</h2>
         <ul>
-            {items.map((el, index) => (
+            {items.map((el, index) => ( // el rappresenta ogni elemento dell'array. 
+            // Il secondo parametro di .map(), cioè l’index, serve solo se non hai un identificatore unico da usare come key.
                 <li key={index}>{el}</li>
             ))}
         </ul>
