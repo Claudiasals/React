@@ -49,6 +49,20 @@ function List2() {
     )
 } /* senza key React mostrerà un warning in console */
 
+
+export const List3= ({ items }) => {
+    return (
+        <>
+        <h2> Lista importata da array in App</h2>
+        <ul>
+            {items.map((el, index) => (
+                <li key={index}>{el}</li>
+            ))}
+        </ul>
+        </>
+    )
+}
+
 export {List, List2}; // esportazione nominata per esportare più di un componente dallo stesso file
 
 // part2: Usa il componente ItemList in un altro componente principale, passando un array di elementi.
