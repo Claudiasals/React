@@ -50,3 +50,5 @@ function List2() {
 } /* senza key React mostrerà un warning in console */
 
 export {List, List2}; // esportazione nominata per esportare più di un componente dallo stesso file
+
+// part2: Usa il componente ItemList in un altro componente principale, passando un array di elementi.
