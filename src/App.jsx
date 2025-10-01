@@ -4,7 +4,7 @@ import LoginForm from "./LoginForm";
 import { List, List2, List3 } from "./ItemList"; //tra le graffe per importare i due componenti contenuti nlìel file jsx
 import UncontrolledInput from "./UncontrolledInput";
 import Prova from "./prova-spread";
-
+import Card from "./Card"
 
 const App = () => {
 
@@ -27,6 +27,13 @@ const App = () => {
 
       <UncontrolledInput/>
       <Prova/>
+      <Card> 
+       <ul>
+        <li>aggiunto</li>
+        <li>children</li>
+        <li>html</li>
+        </ul>
+        </Card>
     </>
   )
 
