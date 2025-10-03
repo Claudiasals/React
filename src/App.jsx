@@ -5,6 +5,7 @@ import { List, List2, List3 } from "./ItemList"; //tra le graffe per importare i
 import UncontrolledInput from "./UncontrolledInput";
 import Prova from "./prova-spread";
 import Card from "./Card"
+import useFetch from "./useFetch";
 
 const App = () => {
 
@@ -34,6 +35,7 @@ const App = () => {
         <li>html</li>
         </ul>
         </Card>
+        <useFetch/>
     </>
   )
 
