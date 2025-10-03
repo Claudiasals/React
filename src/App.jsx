@@ -12,7 +12,8 @@ const App = () => {
   //definisco l'array di elementi da passare
   const arrayElements = ["Giove", "Marte", "Venere"];
   const { data, loading, error } = useFetch("https://jsonplaceholder.typicode.com/comments");
-
+  //prendo i tre valori dall’oggetto restituito dall’hook e li metti in tre variabili 
+  //separate che puoi usare nel componente.
 
   return (
     <>
@@ -39,7 +40,9 @@ const App = () => {
       </Card>
 
   {/* Mostro i dati della fetch */}
-    {/* utilizziamo l'AND logico al posto di "if". Se loading è true allora renderizza "Caricamento...""*/}
+    {/* utilizziamo l'AND logico al posto di "if".
+     e utilizziamo le 3 variabili collegate ai valori restituiti dall'hook.
+     Se loading è true allora renderizza "Caricamento...""*/}
 {loading && <p>Caricamento commenti...</p>}
 {/* 
   Controllo lo stato `loading` restituito dal nostro hook useFetch. 
