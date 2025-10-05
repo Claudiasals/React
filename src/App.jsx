@@ -6,6 +6,8 @@ import UncontrolledInput from "./UncontrolledInput";
 import Prova from "./prova-spread";
 import Card from "./Card"
 import useFetch from "./useFetch";
+import ToDoList from "./ToDoList";
+import ToDoList2 from "./ToDoList2";
 
 const App = () => {
 
@@ -38,6 +40,9 @@ const App = () => {
           <li>html</li>
         </ul>
       </Card>
+      <ToDoList/>
+      <h2> ToDoList2</h2>
+      <ToDoList2/>
 
   {/* Mostro i dati della fetch */}
     {/* utilizziamo l'AND logico al posto di "if".
