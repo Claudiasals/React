@@ -23,10 +23,20 @@ const ToDoList2 = () => {
     console.log(error)
     console.log(data)
 
+    // creo lo state per i termini di ricerca
+    const [search, setSearch] = useState("");
+
+    // utlizzo l'hook per ottenere la lista filtrata
+    const filteredTodos = useFilteredTodos(data || [], search);
+    // || = Se todos è falso, null, undefined o [] vuoto → usa un array vuoto al posto di todos
+    // Serve per evitare errori nel caso in cui i dati non siano ancora arrivati dal fetch.
+
+
     // mostro i msg di loading e di errore, perché dal useFetch 
     // prende soltanto i valori e non i msg html
     if (loading) return <p>Caricamento lista To-Do...</p>;
     if (error) return <p>Errore: {error}</p>;
+
 
 
     return ( // utilizzo map per ciclare e poter utilizzare i dati che mi servono 
@@ -60,11 +70,4 @@ const ToDoList2 = () => {
     )
 }
 
-// creo lo state per i termini di ricerca
-const [search, setSearch] = useState("");
-
-// utlizzo l'hook per ottenere la lista filtrata
-const filteredTodos = useFilteredTodos(todos || [], search);
-// || = Se todos è falso, null, undefined o [] vuoto → usa un array vuoto al posto di todos
-// Serve per evitare errori nel caso in cui i dati non siano ancora arrivati dal fetch.
 export default ToDoList2;
