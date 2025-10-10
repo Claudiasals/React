@@ -13,19 +13,21 @@ output: array dei to-do filtrati
 // importo gli hook che mi servono
 import { useState, useEffect } from "react";
 
-// creo la hook e gli passo come parametri: todos per ricevere 
-// i dati dalla lista; searchterm per i termini di ricerca che andremo a filtrare
+// creo la hook e gli passo come parametri: todos per ricevere i dati dalla lista; 
+// searchterm per i termini di ricerca che andremo a filtrare
 // [] e "" significano: se nessuno passa un valore per todos e searchTerm passa un array o una stringa vuota.
-function useFilteredTodos(todos = [], searchTerm = "") {
+function useFilteredTodos(todos = [], searchTerm = "") { // così non esce undefine in assenza di valori
 
   // creiamo lo stato interno per i todo filtrati.
-  // ????? perché non anche lo stato di data e searchTerm?
   const [filteredTodos, setFilteredTodos] = useState(todos); //useState per salvare lista filtrata
 
   //usiamo useEffect per aggiornare la lista quando cambia qualcosa
   useEffect(() => {
     // prepara il termine di ricerca in minuscolo
-    const term = searchTerm.trim().toLowerCase();
+    const term = String(searchTerm ?? "").trim().toLowerCase(); // con String ci assicuriamo che esca sempre una stringa
+    // ?? operatore di coalescienza => evita che vengano accettati undefine e null, in questi casi passa una strigna vuota
+
+
     /*
     JS di defalt escluderebbe termini di ricerca con lettere maiuscole o minuscole diverse da come
     sono scritte nella lista, per fargli trovare più intelligentemente i termini risolviamo 
@@ -38,17 +40,23 @@ function useFilteredTodos(todos = [], searchTerm = "") {
 
     // se il termine è vuoto → mostra tutti i todo
     if (!term) {
-      setFilteredTodos(todos);
+      setFilteredTodos(todos ?? []); 
       return;
     }
     // altrimenti filtra i todo
-    const filtered = todos.filter((todo) =>
-      todo.title.toLowerCase().includes(term)
+    const filtered = (todos ?? []).filter((todo) =>
+      String(todo.title ?? "").toLowerCase().includes(term)
     );
 
 
     // aggiorna lo stato
     setFilteredTodos(filtered);
+    /* React:
+    cambia internamente lo stato di filteredTodos,
+    fa “rieseguire” il componente (o l’hook) con il nuovo valore,
+    e di conseguenza la lista visualizzata si aggiorna automaticamente. 
+    */
+
   }, [todos, searchTerm]); //dipendenze
 
 
