@@ -52,6 +52,12 @@ const ToDoList2 = () => {
                 // "e" è l'evento generato dall'input
                 // setSearch aggiorna lo stato "search" con il valore attuale dell'input
                 onChange={(e) => setSearch(e.target.value)}
+                  /*
+                Perchè serve onChange? perché senza onChange:
+                L’input diventa readonly, perché React mostra sempre il valore di search 
+                ma non c’è modo di aggiornarlo. Risultato: non puoi digitare nulla dentro.
+                */
+
 
                 // Testo che compare dentro l'input quando è vuoto
                 // Serve da indicazione per l'utente su cosa scrivere
