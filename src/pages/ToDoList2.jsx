@@ -7,7 +7,7 @@ Visualizza i to-do in una lista,
 mostrando un messaggio di caricamento finché i dati non sono disponibili 
 e un messaggio di errore se qualcosa va storto. */
 
-import { useState } from "react";
+import { useState, useCallback } from "react";
 import useFetch from "./useFetch";
 // importo la hook per filtrare i termini di ricerca
 import useFilteredTodos from "./useFilteredTodos";
@@ -25,6 +25,23 @@ const ToDoList2 = () => {
 
     // creo lo state per i termini di ricerca
     const [search, setSearch] = useState("");
+
+
+      // useCallback per memorizzare la funzione e non ricrearla a ogni render
+      const handleSearchChange = useCallback((e) => {
+        setSearch(e.target.value);
+    }, []);
+    /* 
+    Ogni volta che lo stato o le props di un componente cambiano, 
+    React ricrea il componente. Come risolviamo? con useCallback.
+    1) handleSearchChange ora è memorizzato con useCallback, 
+    quindi React non lo ricrea ad ogni render.
+    2) L’input rimane controllato e funziona esattamente come prima.
+    3) I componenti figli che eventualmente ricevono questa funzione 
+    come prop non si ri-renderizzano inutilmente.
+    */
+
+
 
     // utlizzo l'hook per ottenere la lista filtrata
     const filteredTodos = useFilteredTodos(data || [], search);
@@ -51,7 +68,10 @@ const ToDoList2 = () => {
                 // Funzione che viene chiamata ogni volta che l'utente digita qualcosa
                 // "e" è l'evento generato dall'input
                 // setSearch aggiorna lo stato "search" con il valore attuale dell'input
-                onChange={(e) => setSearch(e.target.value)}
+
+                // onChange={(e) => setSearch(e.target.value)} --> la spstituisco con handleSearchChange
+                onChange={handleSearchChange}
+
                   /*
                 Perchè serve onChange? perché senza onChange:
                 L’input diventa readonly, perché React mostra sempre il valore di search 
