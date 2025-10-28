@@ -27,8 +27,8 @@ const ToDoList2 = () => {
     const [search, setSearch] = useState("");
 
 
-      // useCallback per memorizzare la funzione e non ricrearla a ogni render
-      const handleSearchChange = useCallback((e) => {
+    // useCallback per memorizzare la funzione e non ricrearla a ogni render
+    const handleSearchChange = useCallback((e) => {
         setSearch(e.target.value);
     }, []);
     /* 
@@ -44,9 +44,31 @@ const ToDoList2 = () => {
 
 
     // utlizzo l'hook per ottenere la lista filtrata
-    const filteredTodos = useFilteredTodos(data || [], search);
-    // || = Se todos è falso, null, undefined o [] vuoto → usa un array vuoto al posto di todos
-    // Serve per evitare errori nel caso in cui i dati non siano ancora arrivati dal fetch.
+    // modifico integrando useMemo per memorizzare il risultsto del filtro e riaggiornarlo
+    // solo se cambiano data (lista to do dall'API) o search ( ricerca termini)
+    
+    // useMemo serve a "memorizzare" il risultato del filtro,
+    // e a rifarlo solo se cambiano i dati (data) o il testo di ricerca (search).
+    const filteredTodos = useMemo(() => {
+
+        //  Pulisce il termine di ricerca:
+        // lo forza a essere una stringa
+        const term = String(search ?? "").trim().toLowerCase();
+// search ?? "" ---> assicura che non sia null o undefine
+        //  Se il termine è vuoto, ritorna direttamente tutti i to-do
+        // (evita di filtrare inutilmente)
+        if (!term) return data ?? [];
+
+        // Altrimenti, filtra i to-do:
+        // controlla se ogni titolo contiene il termine di ricerca
+        return (data ?? []).filter((todo) =>
+            String(todo.title ?? "").toLowerCase().includes(term)
+        );
+
+        // useMemo ricalcola il filtro solo quando cambiano:
+        // - data (lista originale)
+        // - search (testo inserito dall’utente)
+    }, [data, search]);
 
 
     // mostro i msg di loading e di errore, perché dal useFetch 
@@ -72,11 +94,11 @@ const ToDoList2 = () => {
                 // onChange={(e) => setSearch(e.target.value)} --> la spstituisco con handleSearchChange
                 onChange={handleSearchChange}
 
-                  /*
-                Perchè serve onChange? perché senza onChange:
-                L’input diventa readonly, perché React mostra sempre il valore di search 
-                ma non c’è modo di aggiornarlo. Risultato: non puoi digitare nulla dentro.
-                */
+                /*
+              Perchè serve onChange? perché senza onChange:
+              L’input diventa readonly, perché React mostra sempre il valore di search 
+              ma non c’è modo di aggiornarlo. Risultato: non puoi digitare nulla dentro.
+              */
 
 
                 // Testo che compare dentro l'input quando è vuoto
