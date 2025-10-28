@@ -58,6 +58,9 @@ const ToDoList2 = () => {
         //  Se il termine è vuoto, ritorna direttamente tutti i to-do
         // (evita di filtrare inutilmente)
         if (!term) return data ?? [];
+        // term = quello che l’utente ha scritto nel campo di ricerca, già pulito (minuscolo e senza spazi).
+        // !term = se term è vuoto ( se non è term) e restituisce booleano
+        // data ?? [] ---> Se i dati data esistono, restituiscili; altrimenti usa un array vuoto.”
 
         // Altrimenti, filtra i to-do:
         // controlla se ogni titolo contiene il termine di ricerca
