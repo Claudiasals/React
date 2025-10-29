@@ -1,19 +1,21 @@
-import TextInput from "./TextInput";
+
 import ToDoList from "./ToDoList";
 import ToDoList2 from "./ToDoList2";
-
+import TodoProvider from "./TodoProvider";
 
 const Home = () => {
 
-    return (
-      <>
-      <h2> To Do List</h2>
+  return (
+    <>
+      <TodoProvider>
+        <h2> To Do List</h2>
         <ToDoList />
         <h2> To Do List 2</h2>
         <ToDoList2 />
-      </>
-    )
-  
-  };
-  
-  export default Home;
+      </TodoProvider>
+    </>
+  )
+
+};
+
+export default Home;
