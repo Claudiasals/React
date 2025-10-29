@@ -32,7 +32,6 @@ const ToDoList = () => {
 
   return (
     <>
-      <h2>To-Do List</h2>
       <input
       type="text"
   value={term} // mostra il valore attuale della ricerca

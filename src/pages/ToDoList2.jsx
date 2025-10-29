@@ -7,10 +7,12 @@ Visualizza i to-do in una lista,
 mostrando un messaggio di caricamento finché i dati non sono disponibili 
 e un messaggio di errore se qualcosa va storto. */
 
-import { useState, useCallback } from "react";
+import { useState, useCallback, useMemo, useRef, useEffect } from "react";
 import useFetch from "./useFetch";
 // importo la hook per filtrare i termini di ricerca
 import useFilteredTodos from "./useFilteredTodos";
+
+
 
 const ToDoList2 = () => {
     // Chiamo l'hook useFetch per recuperare i dati dall'API.
@@ -46,7 +48,7 @@ const ToDoList2 = () => {
     // utlizzo l'hook per ottenere la lista filtrata
     // modifico integrando useMemo per memorizzare il risultsto del filtro e riaggiornarlo
     // solo se cambiano data (lista to do dall'API) o search ( ricerca termini)
-    
+
     // useMemo serve a "memorizzare" il risultato del filtro,
     // e a rifarlo solo se cambiano i dati (data) o il testo di ricerca (search).
     const filteredTodos = useMemo(() => {
@@ -54,7 +56,7 @@ const ToDoList2 = () => {
         //  Pulisce il termine di ricerca:
         // lo forza a essere una stringa
         const term = String(search ?? "").trim().toLowerCase();
-// search ?? "" ---> assicura che non sia null o undefine
+        // search ?? "" ---> assicura che non sia null o undefine
         //  Se il termine è vuoto, ritorna direttamente tutti i to-do
         // (evita di filtrare inutilmente)
         if (!term) return data ?? [];
@@ -76,16 +78,51 @@ const ToDoList2 = () => {
 
     // mostro i msg di loading e di errore, perché dal useFetch 
     // prende soltanto i valori e non i msg html
-    if (loading) return <p>Caricamento lista To-Do...</p>;
     if (error) return <p>Errore: {error}</p>;
+    // if (loading) return <p>Caricamento lista To-Do...</p>; ---> elimino per contrasto con focus input. 
+    // inserisco la condizione loading nel return. PERCHé? 
+    // perchè questa conodizione blocca subito il render del resto del componente fino a quando 
+    // loading diventa false. Di conseguenza l’input non viene mai montato nel DOM finché i dati non sono caricati.
+    // Risultato: inputRef.current è sempre null durante il montaggio, quindi il focus non funziona. 
+    // soluzione: mettere la condione nel JSX (il return) 
+    /*
+    L’input viene sempre renderizzato, indipendentemente dal fatto che loading sia true o false.
+    Il messaggio di caricamento appare solo sopra l’input mentre i dati stanno arrivando.
+    Quando loading passa a false, l’effetto useEffect può leggere inputRef.current e mettere il focus.
+    */
+    
+    // creo la costante per mettere il focus sull'input
+    const inputRef = useRef(null);
 
-
+    useEffect(() => {
+        if (inputRef.current) { /*
+            !loading → significa “i dati sono stati caricati”, 
+            quindi il componente ha finito di ricevere i dati da useFetch.
+            inputRef.current → controlla che il ref sia collegato all’elemento <input>.
+            Se non c’è ancora l’input nel DOM, inputRef.current sarebbe null.
+            */
+            inputRef.current.focus();
+        }
+    }, [loading]); // dipendenza [loading]: perché in questo caso serve usare loading come dipendenza?
+    /* Finché loading è true, React non renderizza l’input.
+    Quindi inputRef.current è ancora null.
+    Solo quando loading diventa false, il componente “prosegue” oltre queste righe e rende l’input. */
 
     return ( // utilizzo map per ciclare e poter utilizzare i dati che mi servono 
         // da ogni elemento dell'array scaricato
         <>
+            {loading && <p>Caricamento lista To-Do...</p>}
+            {/*
+             L’input viene sempre renderizzato, indipendentemente dal fatto che loading sia true o false.
+              Il messaggio di caricamento appare solo sopra l’input mentre i dati stanno arrivando.
+                 Quando loading passa a false, l’effetto useEffect può leggere inputRef.current e mettere il focus.
+                  */}
 
             <input
+
+                ref={inputRef} // collego la variabile che contiene le indicazioni per il focus
+
+
                 // Il valore dell'input è legato allo stato "search"
                 // Questo lo rende un "controlled component": React controlla cosa viene mostrato
                 value={search}
