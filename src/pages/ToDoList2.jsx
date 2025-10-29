@@ -159,3 +159,26 @@ const ToDoList2 = () => {
 }
 
 export default ToDoList2;
+
+// SPIEGAZIONE DELLA SOUZIONE DEL BUG DEL FOCUS SULL'INPUT CAUSATO DALLA CONDIZIONE IF LOADING:
+/*
+rima: if (loading) return ... fuori dal return
+if (loading) return <p>Caricamento lista To-Do...</p>;
+return (
+  <input ref={inputRef} ... />
+  <ul>...</ul>
+)
+
+
+React legge il componente.
+
+Appena incontra if (loading) return ..., interrompe il render e restituisce solo quel <p>.
+
+Tutto il resto del JSX (input, lista) non viene nemmeno calcolato.
+
+Risultato: l’input non esiste ancora nel DOM → inputRef.current è null.
+
+Quando loading diventa false, React riesegue il componente e questa volta passa al resto del JSX.
+
+➡️ Problema: non puoi mettere il focus sull’input durante il primo render perché l’input non esiste ancora.
+*/
