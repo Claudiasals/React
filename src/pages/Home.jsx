@@ -1,7 +1,6 @@
-import TextInput from "./TextInput";
-import ToDoList from "./ToDoList";
-import ToDoList2 from "./ToDoList2";
-import TodoProvider from "./todoProvider";
+import ToDoList from "../components/ToDoList";
+import ToDoList2 from "../components/ToDoList2";
+import TodoProvider from "../components/TodoProvider";
 
 
 const Home = () => {

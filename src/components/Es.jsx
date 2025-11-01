@@ -1,11 +1,11 @@
-import LoginForm from "./LoginForm";
+import LoginForm from "../pages/LoginForm";
 import Counter from "./Counter";
 import TextInput from "./TextInput";
 import { List, List2, List3 } from "./ItemList";
 import UncontrolledInput from "./UncontrolledInput";
 import Prova from "./prova-spread";
 import Card from "./Card";
-import ToDoList from "./ToDoList";
+import ToDoList from "../components/ToDoList";
 import ToDoList2 from "./ToDoList2";
 import useFetch from "./useFetch";
 
