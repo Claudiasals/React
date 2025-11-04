@@ -10,15 +10,16 @@ const App = () => {
 
   return (
     <>
-
-    <Navbar />
       <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/about" element={<About />} />
-        <Route path="/login" element={<LoginForm />} />
-
+        {/* Layout come contenitore principale che contiene Navbar + Outlet */}
+        <Route path="/" element={<Layout />} >
+          {/* index = rotta principale ("/") */}
+          <Route index element={<Home />} />
+          <Route path="/about" element={<About />} />
+          <Route path="/login" element={<LoginForm />} />
+        </Route>
       </Routes>
-  
+
     </>
   )
 
