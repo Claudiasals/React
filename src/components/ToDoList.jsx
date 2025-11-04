@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import useFetch from "./useFetch";
 import useFilteredTodos2 from "./useFilteredTodos2"; // importo la mia custom hook
+import { Link } from "react-router-dom";
 
 const ToDoList = () => {
   const { data, loading, error } = useFetch("https://dummyjson.com/todos");
@@ -41,7 +42,7 @@ const ToDoList = () => {
       />
       <ul>
         {filteredTodos2.map((todo) => (   // <--- usa lo stato locale "todos"
-          <li key={todo.id}>
+          <li key={todo.id} >
             <input
               type="checkbox"
               checked={todo.completed}   // checkbox dinamica
@@ -65,8 +66,14 @@ const ToDoList = () => {
             {/* Bottone Dettagli : “Quando l’URL corrisponde a /todo/id, React 
             mostra il componente (la pagina) <TodoDetails />.”*/}
             <Link to={`/todo/${todo.id}`}>
-              <button>Details</button>
+              <button
+                style={{ fontSize: "14px" }}
+                className="bg-blue-500 text-white rounded-full px-4 py-1"
+              >
+                Details
+              </button>
             </Link>
+
 
 
           </li>

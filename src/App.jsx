@@ -3,6 +3,8 @@ import Home from "./pages/Home";
 import About from "./pages/About";
 import LoginForm from "./pages/LoginForm";
 import TodoDetails from "./pages/TodoDetails";
+import Layout from "./Layout";
+
 
 
 const App = () => {
