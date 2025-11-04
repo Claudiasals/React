@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import useFetch from "./useFetch";
 import useFilteredTodos2 from "./useFilteredTodos2"; // importo la mia custom hook
-import { Link } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 
 const ToDoList = () => {
   const { data, loading, error } = useFetch("https://dummyjson.com/todos");
@@ -23,7 +23,19 @@ const ToDoList = () => {
     );
   };
 
-  const [term, setTerm] = useState(""); // creo lo state per il termine di ricerca
+  // const [term, setTerm] = useState(""); // creo lo state per il termine di ricercaconst [searchParams, setSearchParams] = useSearchParams();
+  const [searchParams, setSearchParams] = useSearchParams();
+  const [term, setTerm] = useState(searchParams.get("search") || ""); 
+
+  // searchParams.get("search") legge il valore del parametro di query search dall’URL (se c’è).
+  // Se non c’è, inizializza a "". 
+
+  const handleChange = (e) => {
+    setTerm(e.target.value);
+    setSearchParams({ search: e.target.value });
+  };
+  
+
 
   const filteredTodos2 = useFilteredTodos2(todos || [], term); // utilizzo hook personalizzandolo con i parametri di ToDoList
 
@@ -33,11 +45,10 @@ const ToDoList = () => {
 
   return (
     <>
-      <h2>To-Do List</h2>
       <input
         type="text"
         value={term} // mostra il valore attuale della ricerca
-        onChange={(e) => setTerm(e.target.value)} // aggiorna lo stato quando digiti
+        onChange={handleChange}    // collega la funzione che aggiorna stato e query
         placeholder="Cerca un to-do..." // testo grigio quando è vuoto
       />
       <ul>
