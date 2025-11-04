@@ -24,7 +24,7 @@ const ToDoList = () => {
 
   const [term, setTerm] = useState(""); // creo lo state per il termine di ricerca
 
-  const filteredTodos2 = useFilteredTodos2 (todos || [], term); // utilizzo hook personalizzandolo con i parametri di ToDoList
+  const filteredTodos2 = useFilteredTodos2(todos || [], term); // utilizzo hook personalizzandolo con i parametri di ToDoList
 
   if (loading) return <p>Caricamento lista To-Do...</p>;
   if (error) return <p>Errore: {error}</p>;
@@ -34,10 +34,10 @@ const ToDoList = () => {
     <>
       <h2>To-Do List</h2>
       <input
-      type="text"
-  value={term} // mostra il valore attuale della ricerca
-  onChange={(e) => setTerm(e.target.value)} // aggiorna lo stato quando digiti
-  placeholder="Cerca un to-do..." // testo grigio quando è vuoto
+        type="text"
+        value={term} // mostra il valore attuale della ricerca
+        onChange={(e) => setTerm(e.target.value)} // aggiorna lo stato quando digiti
+        placeholder="Cerca un to-do..." // testo grigio quando è vuoto
       />
       <ul>
         {filteredTodos2.map((todo) => (   // <--- usa lo stato locale "todos"
@@ -47,13 +47,28 @@ const ToDoList = () => {
               checked={todo.completed}   // checkbox dinamica
               onChange={() => toggleTodo(todo.id)}  // cliccando cambia lo stato
             />{" "}
-            <span
-              style={{
-                textDecoration: todo.completed ? "line-through" : "none",
-              }}
+            {/*  <span> è un contenitore inline neutro (non crea blocchi, non cambia layout);
+            serve per poter “agganciare” lo stile condizionale;
+            dentro ci metto il testo del to-do. e la condizione per sbarrarlo */}
+            <span style={{
+              textDecoration: todo.completed ? "line-through" : "none", // utilizzo il ternario per applicare uno stile in base ad una condiione
+              // Qui l'oggetto ha una sola proprietà: textDecoration.
+            }}
             >
-              {todo.todo}
+              {/* aggiungo la riga sui todo completati, se todo.completed è true si sbarra. */}
+              {/* style è la prop inline per applicare stili CSS direttamente sull'elemento. */}
+
+              {todo.todo} {/* mostro il testo del to-do */}
             </span>
+
+
+            {/* Bottone Dettagli : “Quando l’URL corrisponde a /todo/id, React 
+            mostra il componente (la pagina) <TodoDetails />.”*/}
+            <Link to={`/todo/${todo.id}`}>
+              <button>Details</button>
+            </Link>
+
+
           </li>
         ))}
       </ul>
